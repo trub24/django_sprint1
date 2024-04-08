@@ -44,6 +44,7 @@ posts = [
     },
 ]
 
+
 dict_ex = {'id': None, 'location': 'Не найдено', 'date': 'Не найдено',
            'category': 'Не найдено', 'text': 'Не найдено'}
 
@@ -65,7 +66,7 @@ def post_detail(request, pk):
         posts_by_id.update({pk: dict_ex})
         context = {"post": posts_by_id[pk]}
         return render(request, template, context)
-        
+
 
 def category_posts(request, category_slug):
     template = 'blog/category.html'
