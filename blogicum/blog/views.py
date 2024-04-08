@@ -1,9 +1,6 @@
 from django.shortcuts import render
 
 
-# Create your views here.
-
-
 posts = [
     {
         'id': 0,
@@ -47,6 +44,9 @@ posts = [
     },
 ]
 
+dict_ex = {'id': None, 'location': 'Не найдено', 'date': 'Не найдено',
+           'category': 'Не найдено', 'text': 'Не найдено'}
+
 
 def index(request):
     template = 'blog/index.html'
@@ -56,9 +56,16 @@ def index(request):
 
 def post_detail(request, pk):
     template = 'blog/detail.html'
-    context = {'post': posts[pk]}
-    return render(request, template, context)
-
+    posts_by_id = {item['id']: item for item in posts}
+    if pk in posts_by_id.keys():
+        context = {"post": posts_by_id[pk]}
+        return render(request, template, context)
+    else:
+        dict_ex['id'] = pk
+        posts_by_id.update({pk: dict_ex})
+        context = {"post": posts_by_id[pk]}
+        return render(request, template, context)
+        
 
 def category_posts(request, category_slug):
     template = 'blog/category.html'
